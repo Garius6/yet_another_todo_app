@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:first_app/models/todo_model.dart';
-import 'package:first_app/screens/todo_detail.dart';
 import 'package:first_app/screens/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

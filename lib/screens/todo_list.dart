@@ -1,3 +1,4 @@
+import 'package:first_app/models/todo_model.dart';
 import 'package:first_app/screens/todo_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ class TodoList extends StatelessWidget {
     super.key,
   });
 
-  final List<String> todos;
+  final List<Todo> todos;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class TodoList extends StatelessWidget {
           itemCount: todos.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(todos[index]),
+              title: Text(todos[index].title),
               onTap: () {
                 print("tapped of ${todos[index]}");
                 Navigator.push(
