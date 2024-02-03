@@ -15,7 +15,7 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MainPage(),
     );
   }
@@ -26,8 +26,6 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TodoModel>(
-      builder: (context, todos, child) => TodoList(todos.todos),
-    );
+    return TodoList();
   }
 }
