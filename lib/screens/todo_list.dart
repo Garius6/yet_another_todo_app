@@ -1,5 +1,5 @@
-import 'package:first_app/models/todo_model.dart';
-import 'package:first_app/screens/todo_detail.dart';
+import 'package:yet_another_todo_app/models/todo_model.dart';
+import 'package:yet_another_todo_app/screens/todo_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +14,7 @@ class TodoList extends StatelessWidget {
     return Consumer<TodoModel>(builder: (context, model, child) {
       return Scaffold(
         floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
           onPressed: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => TodoDetail()));

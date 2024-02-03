@@ -1,5 +1,5 @@
 import 'package:date_field/date_field.dart';
-import 'package:first_app/models/todo_model.dart';
+import 'package:yet_another_todo_app/models/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,6 +53,7 @@ class _TodoDetailState extends State<TodoDetail> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.save),
         onPressed: () {
           if (isNew) {
             context
