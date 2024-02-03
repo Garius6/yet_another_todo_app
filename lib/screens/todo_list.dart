@@ -1,6 +1,7 @@
 import 'package:first_app/models/todo_model.dart';
 import 'package:first_app/screens/todo_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TodoList extends StatelessWidget {
@@ -34,6 +35,10 @@ class TodoList extends StatelessWidget {
                   },
                 ),
                 title: Text(model.todos[index].title),
+                subtitle: Text((model.todos[index].plannedDate == null)
+                    ? ""
+                    : DateFormat("dd-MM-yyyy HH:mm")
+                        .format(model.todos[index].plannedDate!)),
                 onTap: () {
                   Navigator.push(
                     context,
