@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(ChangeNotifierProvider(
     create: (context) => TodoModel(),
-    child: TodoApp(),
+    child: const TodoApp(),
   ));
 }
 
@@ -26,6 +26,6 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TodoList();
+    return const TodoList();
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TodoDetail extends StatefulWidget {
-  TodoDetail({super.key, this.todo, this.index});
+  const TodoDetail({super.key, this.todo, this.index});
 
   final Todo? todo;
   final int? index;
