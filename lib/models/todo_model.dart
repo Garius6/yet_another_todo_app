@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:yet_another_todo_app/data/repository/todo_repository.dart';
 
 class TodoModel extends ChangeNotifier {
-  final List<Todo> _todos = [];
+  final TodoDatabase _todoDatabase = TodoDatabase();
 
-  List<Todo> get todos => _todos;
+  Future<List<Todo>> get todos => _todoDatabase.getAllTodos();
 
   int _lastTodoId = 0;
-
-  int get length => _todos.length;
 
   void add(String title, {bool isDone = false, DateTime? plannedDate}) {
     var todo = Todo(
@@ -15,13 +14,12 @@ class TodoModel extends ChangeNotifier {
         title: title,
         isDone: isDone,
         plannedDate: plannedDate);
-    _todos.add(todo);
+    _todoDatabase.addTodo(todo);
     notifyListeners();
   }
 
   void updateAt(int id, Todo todo) {
-    var index = _todos.indexWhere((t) => t.id == id);
-    _todos[index] = todo;
+    _todoDatabase.updateTodo(todo);
     notifyListeners();
   }
 }
@@ -29,10 +27,7 @@ class TodoModel extends ChangeNotifier {
 @immutable
 class Todo {
   const Todo(
-      {required this.id,
-      required this.title,
-      this.isDone = true,
-      this.plannedDate});
+      {required this.title, this.isDone = true, this.plannedDate, this.id = 0});
 
   final int id;
   final String title;

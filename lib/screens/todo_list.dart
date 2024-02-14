@@ -21,36 +21,46 @@ class TodoList extends StatelessWidget {
           },
         ),
         body: SafeArea(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: model.todos.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Checkbox(
-                  value: model.todos[index].isDone,
-                  onChanged: (value) {
-                    model.updateAt(
-                      model.todos[index].id,
-                      model.todos[index].copyWith(isDone: value),
+          child: FutureBuilder(
+              future: model.todos,
+              builder: (context, data) {
+                if (!data.hasData) {
+                  return const Center(
+                    child: Text("Loading..."),
+                  );
+                }
+                var todos = data.data!;
+                return ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: todos.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: Checkbox(
+                        value: todos[index].isDone,
+                        onChanged: (value) {
+                          model.updateAt(
+                            todos[index].id,
+                            todos[index].copyWith(isDone: value),
+                          );
+                        },
+                      ),
+                      title: Text(todos[index].title),
+                      subtitle: Text((todos[index].plannedDate == null)
+                          ? ""
+                          : DateFormat("dd-MM-yyyy HH:mm")
+                              .format(todos[index].plannedDate!)),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  TodoDetail(todo: todos[index])),
+                        );
+                      },
                     );
                   },
-                ),
-                title: Text(model.todos[index].title),
-                subtitle: Text((model.todos[index].plannedDate == null)
-                    ? ""
-                    : DateFormat("dd-MM-yyyy HH:mm")
-                        .format(model.todos[index].plannedDate!)),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            TodoDetail(todo: model.todos[index])),
-                  );
-                },
-              );
-            },
-          ),
+                );
+              }),
         ),
       );
     });

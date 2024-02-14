@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
+import 'package:yet_another_todo_app/models/todo_model.dart';
 
 part 'todo_repository.g.dart';
 
@@ -23,8 +24,33 @@ class TodoDatabase extends _$TodoDatabase {
   @override
   int get schemaVersion => 1;
 
-  Future<List<TodoItem>> getAllTodos() => select(todoItems).get();
-  Future add(TodoItem todo) => into(todoItems).insert(todo);
+  Future<List<Todo>> getAllTodos() async {
+    return select(todoItems).get().then(
+          (value) => value
+              .map((e) => Todo(id: e.id, title: e.title, isDone: e.isDone))
+              .toList(),
+        );
+  }
+
+  Future addTodo(Todo todo) async {
+    into(todoItems).insert(
+      TodoItemsCompanion.insert(
+        title: todo.title,
+        isDone: todo.isDone,
+        plannedDate: Value(todo.plannedDate),
+      ),
+    );
+  }
+
+  Future updateTodo(Todo todo) async {
+    (update(todoItems)..where((tbl) => tbl.id.equals(todo.id))).write(
+      TodoItemsCompanion(
+        title: Value(todo.title),
+        isDone: Value(todo.isDone),
+        plannedDate: Value(todo.plannedDate),
+      ),
+    );
+  }
 }
 
 LazyDatabase _openConnection() {
