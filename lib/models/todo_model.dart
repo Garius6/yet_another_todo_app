@@ -19,7 +19,7 @@ class TodoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateAt(int id, Todo todo) {
+  void updateAt(Todo todo) {
     _todoDatabase.updateTodo(todo);
     notifyListeners();
   }

@@ -60,10 +60,8 @@ class _TodoDetailState extends State<TodoDetail> {
                 .read<TodoModel>()
                 .add(todoTitleController.text, plannedDate: plannedDate);
           } else {
-            context.read<TodoModel>().updateAt(
-                widget.todo!.id,
-                widget.todo!.copyWith(
-                    title: todoTitleController.text, plannedDate: plannedDate));
+            context.read<TodoModel>().updateAt(widget.todo!.copyWith(
+                title: todoTitleController.text, plannedDate: plannedDate));
           }
           Navigator.pop(context);
         },

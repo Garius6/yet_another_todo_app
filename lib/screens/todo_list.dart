@@ -53,7 +53,6 @@ class TodoList extends StatelessWidget {
                     value: todos[index].isDone,
                     onChanged: (value) {
                       model.updateAt(
-                        todos[index].id,
                         todos[index].copyWith(isDone: value),
                       );
                     },
