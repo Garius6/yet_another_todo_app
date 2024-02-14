@@ -27,7 +27,11 @@ class TodoDatabase extends _$TodoDatabase {
   Future<List<Todo>> getAllTodos() async {
     return select(todoItems).get().then(
           (value) => value
-              .map((e) => Todo(id: e.id, title: e.title, isDone: e.isDone))
+              .map((e) => Todo(
+                  id: e.id,
+                  title: e.title,
+                  isDone: e.isDone,
+                  plannedDate: e.plannedDate))
               .toList(),
         );
   }
@@ -37,7 +41,7 @@ class TodoDatabase extends _$TodoDatabase {
       TodoItemsCompanion.insert(
         title: todo.title,
         isDone: todo.isDone,
-        plannedDate: Value(todo.plannedDate),
+        plannedDate: Value.ofNullable(todo.plannedDate),
       ),
     );
   }

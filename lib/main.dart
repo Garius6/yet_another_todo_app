@@ -16,16 +16,7 @@ class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MainPage(),
+      home: TodoListScreen(),
     );
-  }
-}
-
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const TodoList();
   }
 }

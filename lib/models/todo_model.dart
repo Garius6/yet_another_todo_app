@@ -14,6 +14,7 @@ class TodoModel extends ChangeNotifier {
         title: title,
         isDone: isDone,
         plannedDate: plannedDate);
+
     _todoDatabase.addTodo(todo);
     notifyListeners();
   }
