@@ -14,22 +14,32 @@ class TodoDetail extends StatefulWidget {
 }
 
 class _TodoDetailState extends State<TodoDetail> {
-  var todoTitleController = TextEditingController();
-  var isNew = false;
-  DateTime? plannedDate;
+  var _title = "";
+  DateTime? _plannedDate;
+
+  final _formKey = GlobalKey<FormState>();
+  var _isNew = false;
+
+  void _submit() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    if (_isNew) {
+      context.read<TodoModel>().add(_title, plannedDate: _plannedDate);
+    } else {
+      context.read<TodoModel>().updateAt(
+          widget.todo!.copyWith(title: _title, plannedDate: _plannedDate));
+    }
+    Navigator.pop(context);
+  }
 
   @override
   void initState() {
     super.initState();
-    isNew = widget.todo == null;
-    todoTitleController.text = (widget.todo == null) ? "" : widget.todo!.title;
-    plannedDate = (widget.todo == null) ? null : widget.todo!.plannedDate;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    todoTitleController.dispose();
+    _isNew = widget.todo == null;
+    _title = (widget.todo == null) ? "" : widget.todo!.title;
+    _plannedDate = (widget.todo == null) ? null : widget.todo!.plannedDate;
   }
 
   @override
@@ -40,34 +50,36 @@ class _TodoDetailState extends State<TodoDetail> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: todoTitleController,
-            ),
-            DateTimeFormField(
-                initialValue: plannedDate,
-                onChanged: (date) {
-                  setState(() {
-                    plannedDate = date;
-                  });
-                })
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                initialValue: _title,
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return "Can`t be empty";
+                  }
+                  return null;
+                },
+                onChanged: (text) => setState(() {
+                  _title = text;
+                }),
+              ),
+              DateTimeFormField(
+                  initialValue: _plannedDate,
+                  onChanged: (date) {
+                    setState(() {
+                      _plannedDate = date;
+                    });
+                  })
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        onPressed: _submit,
         child: const Icon(Icons.save),
-        onPressed: () {
-          if (isNew) {
-            context
-                .read<TodoModel>()
-                .add(todoTitleController.text, plannedDate: plannedDate);
-          } else {
-            context.read<TodoModel>().updateAt(widget.todo!.copyWith(
-                title: todoTitleController.text, plannedDate: plannedDate));
-          }
-          Navigator.pop(context);
-        },
       ),
     );
   }

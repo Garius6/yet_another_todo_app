@@ -41,7 +41,7 @@ class TodoDatabase extends _$TodoDatabase {
       TodoItemsCompanion.insert(
         title: todo.title,
         isDone: todo.isDone,
-        plannedDate: Value.ofNullable(todo.plannedDate),
+        plannedDate: Value(todo.plannedDate),
       ),
     );
   }
