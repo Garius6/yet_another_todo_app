@@ -38,19 +38,22 @@ class _TodoDetailState extends State<TodoDetail> {
       appBar: AppBar(
         title: Text((widget.todo == null) ? "New todo" : widget.todo!.title),
       ),
-      body: Column(
-        children: [
-          TextField(
-            controller: todoTitleController,
-          ),
-          DateTimeFormField(
-              initialValue: plannedDate,
-              onChanged: (date) {
-                setState(() {
-                  plannedDate = date;
-                });
-              })
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: todoTitleController,
+            ),
+            DateTimeFormField(
+                initialValue: plannedDate,
+                onChanged: (date) {
+                  setState(() {
+                    plannedDate = date;
+                  });
+                })
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.save),

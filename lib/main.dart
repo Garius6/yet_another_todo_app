@@ -15,8 +15,14 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: TodoListScreen(),
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.green,
+            brightness: MediaQuery.of(context).platformBrightness),
+      ),
+      home: const TodoListScreen(),
     );
   }
 }
